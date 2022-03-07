@@ -15,22 +15,6 @@ app.get('/', (_req, res) => {
     
 })
 
-app.get('/health', (_req, res) => {
-    res.status(200).json({connection: 'Alive'})
-})
-
-
-// app.put()
-
-//app.patch()
-
-// app.post()
-
-// app.delete()
-
-
-
-
 app.listen(PORT, () => {
     console.log(`Server is up on port ${PORT}.`)
 })

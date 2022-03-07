@@ -7,16 +7,15 @@ const reminders = []
 
 
 router.get('/', (req, res) => {
-    // res.send('following are to be done')
     res.send(reminders)
 })
 
 
 router.get('/', (req, res) => {
-    // res.send('following are to be done')
     res.status(200).json({todos: reminders, message: 'to-do success'})
 })
 
+//to take in new reminders and by default set them as not done
 router.post('/', (req, res) => {
         const isReminderExist = reminders.findIndex((reminder) => {
             return reminder.note === req.body.note
@@ -36,6 +35,7 @@ router.post('/', (req, res) => {
         return res.status(401).json({message:'Something went wrong!'})
 })
 
+//to delete reminder if exist accessing them via "unique id"
 router.delete('/:ID', (req,res) => {
     const isID = reminders.findIndex((reminder) => {
         return reminder.ID === req.params.ID
@@ -48,6 +48,7 @@ router.delete('/:ID', (req,res) => {
     return res.status(204).json({})
 })
 
+//to update the content or completion staus of an existing reminder 
 router.patch('/:ID', (req,res) => {
     const {note, isCompleted} = req.body
     const reminder = reminders.find((reminder1) => reminder1.ID == req.params.ID)
@@ -59,5 +60,5 @@ router.patch('/:ID', (req,res) => {
     reminder.dateModified = new Date()
     return res.status(200).json({})
 })
-// router.patch()
+
 export default router;
