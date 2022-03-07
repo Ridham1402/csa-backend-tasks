@@ -21,18 +21,18 @@ router.post('/', (req, res) => {
             return reminder.note === req.body.note
         })
         if(isReminderExist===-1){
-
+            const ID = uuid()
             reminders.push({
                 note: req.body.note,
                 dateCreated: new Date(),
                 dateModified: new Date(),
                 isCompleted: false,
-                ID: uuid() 
+                ID: ID 
             })
 
-            return res.status(201).json({message:'to-do added successfully'})
+            return res.status(201).json({message:`to-do added successfully with uniqueID ${ID}`})
         }
-        return res.status(401).json({message:'Something went wrong!'})
+        return res.status(401).json({message:'Note with same content already exists!!'})
 })
 
 //to delete reminder if exist accessing them via "unique id"
@@ -56,8 +56,11 @@ router.patch('/:ID', (req,res) => {
         reminder.note = note
     }else if(isCompleted){
         reminder.isCompleted = isCompleted
+    }else{
+        res.send('Not a valid attribute!')
     }
     reminder.dateModified = new Date()
+    res.send('Reminder updated successfully!')
     return res.status(200).json({})
 })
 
